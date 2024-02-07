@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
+from decorators_module import plot_generation_decorator
 
 class SignalGenerator:
     def __init__(self, samples_number, signal_length):
@@ -42,15 +42,6 @@ class SignalGenerator:
         plt.grid(True)
         plt.legend()
         plt.show()
-
-    def plot_generation_decorator(func):
-        def wrapper(*args, **kwargs):
-            print("In progress: generating the plot...")
-            result = func(*args, **kwargs)
-            print("Plot generated successfully.")
-            return result
-
-        return wrapper
 
     @plot_generation_decorator
     def mse_horizon_plot(self, signal, max_time_horizon, variance):
@@ -116,9 +107,12 @@ class SignalGenerator:
             scatter=True,
         )
 
+def main():
+    signal_generator = SignalGenerator(1000, 4)
+    sin, _ = signal_generator.generate_sin()
+    signal_generator.mse_horizon_plot(sin, 100, 0.5)
+    signal_generator.mse_variance_plot(sin, 10, 1.5)
+    signal_generator.horizon_variance_plot(sin, 100, 1.5)
 
-signal_generator = SignalGenerator(1000, 4)
-sin, x = signal_generator.generate_sin()
-signal_generator.mse_horizon_plot(sin, 100, 0.5)
-signal_generator.mse_variance_plot(sin, 10, 1.5)
-signal_generator.horizon_variance_plot(sin, 100, 1.5)
+if __name__ == '__main__':
+    main()
