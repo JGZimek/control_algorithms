@@ -42,14 +42,10 @@ class AdaptiveController:
         # Recursive least squares algorithm
         for i in range(len(output_signal)):
             rv_n = regressor_vector[i].reshape(-1, 1)
-            weight_function = (
-                1
-                / forgetting_factor
-                * (
-                    weight_function
-                    - (weight_function @ rv_n @ rv_n.T @ weight_function)
-                    / (forgetting_factor + rv_n.T @ weight_function @ rv_n)
-                )
+            weight_function = (1 / forgetting_factor) * (
+                weight_function
+                - (weight_function @ rv_n @ rv_n.T @ weight_function)
+                / (forgetting_factor + rv_n.T @ weight_function @ rv_n)
             )
             estimated_param = estimated_param + weight_function @ rv_n @ (
                 output_signal[i] - rv_n.T @ estimated_param
@@ -60,7 +56,6 @@ class AdaptiveController:
 
     def control(self, expected_output, model_parameters):
         pass
-
 
     @plot_generation_decorator
     def parameter_estimation_plot(
@@ -87,12 +82,8 @@ class AdaptiveController:
 
 def main():
     adaptive_controller = AdaptiveController(1000, 6)
-    u_signal, v_signal, y_signal, model_parameters, x, sin = (
-        adaptive_controller.simulate(0.1, 1, 1, 1)
-    )
-    adaptive_controller.parameter_estimation_plot(
-        u_signal, y_signal, 1, model_parameters
-    )
+    u_signal, v_signal, y_signal, model_parameters, x, sin = (adaptive_controller.simulate(0.1, 1, 1, 1))
+    adaptive_controller.parameter_estimation_plot(u_signal, y_signal, 1, model_parameters)
 
 
 if __name__ == "__main__":
