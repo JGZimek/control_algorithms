@@ -20,8 +20,8 @@ To get started with the project, follow these steps:
    First, clone the repository from GitHub to your local machine using the command:
 
    ```bash
-   git clone https://github.com/JGZimek/Control_systems.git
-   cd Control_systems
+   git clone https://github.com/JGZimek/control_algorithms.git
+   cd control_algorithms
    ```
 
 2. **Create a Virtual Environment**:
